@@ -1,0 +1,273 @@
+from pathlib import Path
+
+html = r'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Wisconsin Guy Style Guide 2026</title>
+<style>
+  :root{
+    --bg:#f4f1ea; --card:#fffdf8; --ink:#1d211f; --muted:#68706a;
+    --accent:#365944; --accent2:#b36b3f; --line:#d9d6ce; --dark:#17211b;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;background:var(--bg);color:var(--ink)}
+  .wrap{max-width:1180px;margin:auto;padding:24px}
+  header{padding:64px 0 36px;display:grid;grid-template-columns:1.4fr .8fr;gap:28px;align-items:end}
+  .eyebrow{font-size:.78rem;text-transform:uppercase;letter-spacing:.18em;color:var(--accent);font-weight:800}
+  h1{font-size:clamp(2.7rem,7vw,6.8rem);line-height:.87;letter-spacing:-.055em;margin:14px 0 20px;max-width:850px}
+  .intro{font-size:1.08rem;line-height:1.65;color:var(--muted);max-width:730px}
+  .weather-card{background:var(--dark);color:white;border-radius:26px;padding:26px;box-shadow:0 16px 50px #0001}
+  .weather-card h2{font-size:1.1rem;margin:0 0 8px}
+  .weather-card p{color:#d6ded8;line-height:1.55;margin:0}
+  .controls{position:sticky;top:0;z-index:5;background:rgba(244,241,234,.92);backdrop-filter:blur(14px);padding:14px 0;border-bottom:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap}
+  button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:10px 15px;font-weight:700;color:var(--ink);cursor:pointer;transition:.2s}
+  button:hover,button.active{background:var(--dark);color:#fff;border-color:var(--dark);transform:translateY(-1px)}
+  section{padding:46px 0}
+  .section-head{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:18px}
+  .section-head h2{font-size:clamp(1.8rem,4vw,3.4rem);letter-spacing:-.04em;margin:0}
+  .section-head p{max-width:540px;color:var(--muted);line-height:1.55;margin:0}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;transition:.2s;min-height:230px}
+  .card:hover{transform:translateY(-3px);box-shadow:0 14px 38px #0000000e}
+  .tag{display:inline-block;font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:28px}
+  .card h3{font-size:1.35rem;margin:0 0 9px}
+  .card p{color:var(--muted);line-height:1.55;margin:0}
+  .formula{margin-top:18px;font-size:.92rem;line-height:1.55;border-top:1px solid var(--line);padding-top:15px}
+  .hero-card{grid-column:span 2;background:linear-gradient(135deg,#20372a,#3b5a46);color:white}
+  .hero-card .tag,.hero-card p{color:#d9e4dc}
+  .palette{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+  .swatch{width:58px;height:58px;border-radius:16px;border:1px solid #0002;display:grid;place-items:center;font-size:.62rem;font-weight:800}
+  .checklist{background:var(--dark);color:white;border-radius:28px;padding:28px}
+  .checkrow{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:1px solid #ffffff20}
+  .checkrow:last-child{border-bottom:0}
+  .checkrow input{margin-top:4px;transform:scale(1.25)}
+  .checkrow small{display:block;color:#b8c2bb;margin-top:4px;line-height:1.45}
+  .outfit-builder{display:grid;grid-template-columns:.7fr 1.3fr;gap:18px}
+  select{width:100%;padding:13px;border-radius:13px;border:1px solid var(--line);font:inherit;background:white;margin:8px 0 14px}
+  .result{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px;min-height:270px}
+  .result h3{font-size:2rem;letter-spacing:-.03em;margin:.1em 0}
+  .result ul{padding-left:19px;line-height:1.75}
+  .goodbad{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .goodbad>div{border-radius:22px;padding:23px}
+  .good{background:#e5eee6}.bad{background:#eee5df}
+  footer{border-top:1px solid var(--line);padding:30px 0 48px;color:var(--muted);font-size:.87rem;line-height:1.55}
+  footer a{color:var(--accent)}
+  [hidden]{display:none!important}
+  @media(max-width:820px){
+    header,.outfit-builder{grid-template-columns:1fr}
+    .grid{grid-template-columns:1fr}
+    .hero-card{grid-column:span 1}
+    .goodbad{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <div class="eyebrow">Wisconsin • Fall 2026</div>
+    <h1>Dress better.<br>Still look like yourself.</h1>
+    <p class="intro">A practical modern style guide for Wisconsin dudes. The goal is not runway cosplay. It is better fit, smarter layers, cleaner shoes, stronger textures, and outfits that work at a brewery, office, Friday-night game, dinner, or a January parking lot.</p>
+  </div>
+  <aside class="weather-card">
+    <h2>The Wisconsin rule</h2>
+    <p>Your outerwear is part of the outfit. Build around layers you can actually remove, boots that can take weather, and fabrics that look better when they get a little beat up.</p>
+  </aside>
+</header>
+
+<div class="controls" id="filters">
+  <button class="active" data-filter="all">Everything</button>
+  <button data-filter="casual">Casual</button>
+  <button data-filter="work">Work</button>
+  <button data-filter="date">Date night</button>
+  <button data-filter="winter">Cold weather</button>
+</div>
+
+<section>
+  <div class="section-head">
+    <h2>The 2026 move</h2>
+    <p>Current menswear is leaning into relaxed proportions, richer color, heritage pieces, plaid and flannel, better outerwear, premium denim, and practical boots. Wisconsin already owns half of this vocabulary, you just have to sharpen it.</p>
+  </div>
+  <div class="grid" id="styleGrid">
+    <article class="card hero-card" data-cat="casual winter">
+      <span class="tag">01 • Start here</span>
+      <h3>Upgrade the basics before chasing trends</h3>
+      <p>Relaxed straight jeans, heavyweight tees, substantial sweatshirts, overshirts, chore coats, clean leather sneakers and real boots will do more for you than a closet full of loud statement pieces.</p>
+      <div class="formula">Easy formula: dark denim + cream tee + olive overshirt + brown leather boots.</div>
+    </article>
+    <article class="card" data-cat="casual work date">
+      <span class="tag">02 • Fit</span>
+      <h3>Stop wearing everything skinny</h3>
+      <p>Modern does not mean enormous. Aim for straight or relaxed trousers, a natural shoulder, and jackets with enough room to layer underneath.</p>
+      <div class="formula">Think: clean drape, not vacuum sealed.</div>
+    </article>
+    <article class="card" data-cat="casual work winter">
+      <span class="tag">03 • Wisconsin-core</span>
+      <h3>Flannel is good again</h3>
+      <p>Use it as an overshirt instead of defaulting to the tucked-in lumberjack uniform. Choose brushed plaids, washed colors, or heavier twill.</p>
+      <div class="formula">Wear open over a tee, hoodie or thermal.</div>
+    </article>
+    <article class="card" data-cat="winter work date">
+      <span class="tag">04 • Outerwear</span>
+      <h3>Let the jacket carry the outfit</h3>
+      <p>Try a wool overcoat, field jacket, clean puffer, leather jacket, chore coat or waxed canvas layer. Current style is giving outerwear more visual weight.</p>
+      <div class="formula">One strong coat beats five forgettable hoodies.</div>
+    </article>
+    <article class="card" data-cat="casual work date">
+      <span class="tag">05 • Color</span>
+      <h3>Neutrals + one actual color</h3>
+      <p>Brown, charcoal, olive, navy and cream remain easy anchors, but 2026 menswear is using more red, green and other saturated accents.</p>
+      <div class="palette">
+        <span class="swatch" style="background:#2f3b32;color:white">OLIVE</span>
+        <span class="swatch" style="background:#674838;color:white">BROWN</span>
+        <span class="swatch" style="background:#efe5d3">CREAM</span>
+        <span class="swatch" style="background:#812f2b;color:white">OXBLOOD</span>
+      </div>
+    </article>
+    <article class="card" data-cat="casual winter date">
+      <span class="tag">06 • Footwear</span>
+      <h3>Your shoes can ruin the whole thing</h3>
+      <p>Keep beat-up gym shoes for the gym. Rotate clean minimal sneakers, moc-toe or service boots, loafers, trail-inspired shoes and winter-ready leather boots.</p>
+      <div class="formula">Snow salt is real. Weatherproof, wipe down, repeat.</div>
+    </article>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <h2>Build me an outfit</h2>
+    <p>Pick the situation and temperature. The page will generate a simple outfit formula that feels current without trying too hard.</p>
+  </div>
+  <div class="outfit-builder">
+    <div class="card">
+      <label><b>Where are you going?</b></label>
+      <select id="occasion">
+        <option value="casual">Casual / brewery / errands</option>
+        <option value="work">Work / smart casual</option>
+        <option value="date">Date / dinner</option>
+        <option value="event">Game / casual event</option>
+      </select>
+      <label><b>How Wisconsin is it outside?</b></label>
+      <select id="temp">
+        <option value="warm">65°F+</option>
+        <option value="cool">45–64°F</option>
+        <option value="cold">20–44°F</option>
+        <option value="brutal">Below 20°F</option>
+      </select>
+      <button onclick="buildOutfit()">Generate outfit</button>
+    </div>
+    <div class="result" id="result">
+      <span class="tag">Your outfit</span>
+      <h3>Dark denim + texture + good shoes</h3>
+      <ul>
+        <li>Heavyweight off-white tee</li>
+        <li>Relaxed dark straight-leg jeans</li>
+        <li>Olive overshirt</li>
+        <li>Brown leather boots</li>
+      </ul>
+      <p>Easy, modern, Wisconsin-proof.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <h2>The “am I dressed weird?” test</h2>
+    <p>A fast sanity check before you leave the house.</p>
+  </div>
+  <div class="goodbad">
+    <div class="good">
+      <h3>Usually works</h3>
+      <p>One interesting piece, clean footwear, 2–4 colors total, varied texture, relaxed fit, visible layering, pants that actually break cleanly over the shoe.</p>
+    </div>
+    <div class="bad">
+      <h3>Usually looks dated</h3>
+      <p>Skin-tight jeans, tiny dress shirts, shiny clubwear, giant logos everywhere, distressed-everything, athletic shoes with every outfit, and a dress belt matched obsessively to casual shoes.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="section-head">
+    <h2>Starter closet checklist</h2>
+    <p>Click through what you already own. Your checks are saved in the browser.</p>
+  </div>
+  <div class="checklist" id="checklist">
+    <label class="checkrow"><input type="checkbox" data-item="tee"><span><b>2–3 heavyweight tees</b><small>White/cream, charcoal, washed black.</small></span></label>
+    <label class="checkrow"><input type="checkbox" data-item="jeans"><span><b>Straight dark jeans</b><small>No aggressive distressing needed.</small></span></label>
+    <label class="checkrow"><input type="checkbox" data-item="pants"><span><b>Olive, brown or charcoal casual trousers</b><small>Think chinos, fatigues or cords.</small></span></label>
+    <label class="checkrow"><input type="checkbox" data-item="overshirt"><span><b>Overshirt or flannel</b><small>Heavy enough to function as a light jacket.</small></span></label>
+    <label class="checkrow"><input type="checkbox" data-item="knit"><span><b>Good sweater or textured knit</b><small>Crewneck, cardigan, half-zip or polo knit.</small></span></label>
+    <label class="checkrow"><input type="checkbox" data-item="coat"><span><b>One serious cold-weather coat</b><small>Parka, puffer or wool overcoat.</small></span></label>
+    <label class="checkrow"><input type="checkbox" data-item="boots"><span><b>Leather boots that survive Wisconsin</b><small>Traction matters. So does cleaning off road salt.</small></span></label>
+    <label class="checkrow"><input type="checkbox" data-item="sneakers"><span><b>Clean casual sneakers</b><small>Not the pair you mow the lawn in.</small></span></label>
+  </div>
+</section>
+
+<footer>
+  <b>Style note:</b> This guide translates current 2026 menswear ideas into practical Upper Midwest clothes rather than copying runway looks literally. Recent GQ coverage highlights relaxed prep, premium denim, plaid, stronger use of color, practical cold-weather layering, statement outerwear and power parkas. Sources:
+  <a href="https://www.gq.com/story/mens-fashion-trends-predictions-2026" target="_blank">GQ Fall 2026 trends</a>,
+  <a href="https://www.gq.com/story/the-9-fall-winter-2026-menswear-trends-to-try-right-now" target="_blank">GQ Fall/Winter 2026</a>,
+  <a href="https://www.gq.com/story/biggest-color-trends-in-menswear-2026" target="_blank">GQ color trends</a>.
+</footer>
+</div>
+
+<script>
+const buttons = document.querySelectorAll('#filters button');
+const cards = document.querySelectorAll('#styleGrid .card');
+buttons.forEach(btn => btn.addEventListener('click', () => {
+  buttons.forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const f = btn.dataset.filter;
+  cards.forEach(card => card.hidden = f !== 'all' && !card.dataset.cat.includes(f));
+}));
+
+const outfits = {
+ casual:{
+  warm:["Heavyweight tee or knit polo","Relaxed straight jeans or fatigue pants","Clean low-profile sneakers"],
+  cool:["Heavyweight tee","Plaid overshirt or chore jacket","Dark straight jeans","Leather sneakers or moc-toe boots"],
+  cold:["Thermal or tee + sweatshirt","Waxed jacket, field coat or puffer","Dark denim","Weather-ready leather boots","Beanie if needed"],
+  brutal:["Thermal base layer","Sweater or fleece","Serious insulated parka","Straight jeans or lined pants","Insulated waterproof boots","Gloves + knit cap"]
+ },
+ work:{
+  warm:["Oxford shirt or knit polo","Straight chinos or pleated trousers","Loafers or clean leather sneakers"],
+  cool:["Oxford shirt","Merino crewneck or cardigan","Chinos or wool-blend trousers","Leather boots"],
+  cold:["Oxford or fine-gauge knit","Textured sweater","Wool topcoat or clean parka","Charcoal trousers","Leather boots"],
+  brutal:["Base layer hidden under shirt","Wool sweater","Insulated parka or substantial overcoat","Warm trousers","Weatherproof boots","Change shoes indoors if needed"]
+ },
+ date:{
+  warm:["Textured knit polo or open-collar shirt","Dark relaxed trousers","Loafers or clean sneakers"],
+  cool:["Fine knit or crisp tee","Suede, leather or chore jacket","Dark jeans","Leather boots"],
+  cold:["Merino sweater","Wool overcoat or clean puffer","Dark jeans or trousers","Leather boots"],
+  brutal:["Warm knit","Sharp insulated parka or wool coat over layers","Dark trousers","Winter-ready leather boots","Keep the outerwear intentional"]
+ },
+ event:{
+  warm:["Team tee, vintage-style sweatshirt or simple knit","Straight jeans","Retro sneakers"],
+  cool:["Team layer or hoodie","Denim, chore or varsity-style jacket","Jeans","Sneakers or boots"],
+  cold:["Hoodie or knit","Puffer or field jacket","Dark denim","Boots"],
+  brutal:["Thermal + team layer","Heavy parka","Warm straight-leg pants","Insulated boots","Hat + gloves"]
+ }
+};
+
+function buildOutfit(){
+  const o=document.getElementById('occasion').value;
+  const t=document.getElementById('temp').value;
+  const labels={casual:"Easy modern casual",work:"Modern Wisconsin workwear",date:"Date night without trying too hard",event:"Game-day, cleaned up"};
+  const tempText={warm:"Warm weather",cool:"Layer weather",cold:"Cold Wisconsin day",brutal:"Real Wisconsin winter"};
+  const list=outfits[o][t].map(x=>`<li>${x}</li>`).join("");
+  document.getElementById('result').innerHTML=`<span class="tag">${tempText[t]}</span><h3>${labels[o]}</h3><ul>${list}</ul><p>Keep the palette controlled and let one texture, jacket, or shoe choice do the interesting work.</p>`;
+}
+
+document.querySelectorAll('#checklist input').forEach(box=>{
+  box.checked=localStorage.getItem('wi-style-'+box.dataset.item)==='1';
+  box.addEventListener('change',()=>localStorage.setItem('wi-style-'+box.dataset.item,box.checked?'1':'0'));
+});
+</script>
+</body>
+</html>'''
+
+path = Path("/mnt/data/wisconsin_dude_style_guide.html")
+path.write_text(html, encoding="utf-8")
+print(f"Created {path}")
